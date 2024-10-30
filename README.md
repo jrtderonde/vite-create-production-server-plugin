@@ -1,50 +1,64 @@
-# React + TypeScript + Vite
+# `vite-plugin-create-production-server`
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Vite plugin to create a production-ready static file server for your built assets. This plugin simplifies serving files directly from the `dist` folder without needing an additional server setup. You can configure the port, entry point, and build directory as needed.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To install the plugin, run:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install vite-plugin-create-production-server serve-static --save-dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Usage
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Add the plugin to your `vite.config.ts` (or `vite.config.js`) file:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```typescript
+import { defineConfig } from "vite";
+import { createProductionServerPlugin } from "vite-plugin-create-production-server";
+
+export default defineConfig({
+  plugins: [
+    createProductionServerPlugin({
+      port: 3000, // Optional, default is 8080
+      entryPoint: "index.html", // Optional, default is "index.html"
+      buildDirectory: "dist", // Optional, default is "dist"
+    }),
+  ],
+});
 ```
+
+## Options
+
+The plugin accepts an options object to configure the server:
+
+- `port` (number, optional): Port number on which the server will run. Default is `8080`.
+- `entryPoint` (string, optional): The entry HTML file to serve. Default is `"index.html"`.
+- `buildDirectory` (string, optional): Directory to serve static files from. Default is `"dist"`.
+
+### Example
+
+```typescript
+createProductionServerPlugin({
+  port: 5000,
+  entryPoint: "main.html",
+  buildDirectory: "output",
+});
+```
+
+## Running the Server
+
+Use the `--serve` or `-s` command-line argument to start the production server after building:
+
+```bash
+vite build -- --serve
+```
+
+or
+
+```bash
+vite build -- -s
+```
+
+The server will start on the configured port (`http://localhost:<port>`), and it will automatically clear the console for easier readability. This plugin is perfect for serving static files without the need for a separate server or complex configuration.
