@@ -1,3 +1,6 @@
+import path from "path";
+import fs from "fs";
+
 import { createServer } from "http";
 import serveStatic from "serve-static";
 import { PluginOption } from "vite";
@@ -62,8 +65,14 @@ export function createProductionServerPlugin(
         });
 
         serve(req, res, () => {
-          res.statusCode = 404;
-          res.end(`Page not found: ${req.url}`);
+          const file = path.join(buildDirectory, entryPoint);
+
+          if (fs.existsSync(file)) {
+            fs.createReadStream(file).pipe(res);
+          } else {
+            res.statusCode = 404;
+            res.end("Not Found");
+          }
         });
       });
 
