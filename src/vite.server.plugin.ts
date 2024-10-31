@@ -1,27 +1,11 @@
 import path from "path";
 import fs from "fs";
-
 import { createServer } from "http";
 import serveStatic from "serve-static";
 import { PluginOption } from "vite";
 
-const DEFAULT_PORT = 8080;
-const DEFAULT_ENTRYPOINT = "index.html";
-const DEFAULT_BUILD_DIR = "dist";
-
-export type CreateProductionServerOptions = {
-  port?: number;
-  entryPoint?: string;
-  buildDirectory?: string;
-};
-
-const DEFAULT_OPTIONS: Required<CreateProductionServerOptions> = {
-  port: DEFAULT_PORT,
-  entryPoint: DEFAULT_ENTRYPOINT,
-  buildDirectory: DEFAULT_BUILD_DIR,
-};
-
-type ServeArgument = "--serve" | "-s";
+import { DEFAULT_OPTIONS } from "./config";
+import { CreateProductionServerOptions, ServeArgument } from "./types";
 
 const getDefiniteOptions = (
   options?: CreateProductionServerOptions
