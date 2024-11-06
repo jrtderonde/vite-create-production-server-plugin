@@ -1,4 +1,4 @@
-# `vite-plugin-create-production-server`
+# `vite-create-production-server-plugin`
 
 A Vite plugin to create a production-ready static file server for your built assets. This plugin simplifies serving files directly from the `dist` folder without needing an additional server setup. You can configure the port, entry point, and build directory as needed.
 
@@ -7,7 +7,7 @@ A Vite plugin to create a production-ready static file server for your built ass
 To install the plugin, run:
 
 ```bash
-npm install vite-plugin-create-production-server serve-static --save-dev
+npm install vite-create-production-server-plugin serve-static --save-dev
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ Add the plugin to your `vite.config.ts` (or `vite.config.js`) file:
 
 ```typescript
 import { defineConfig } from "vite";
-import { createProductionServerPlugin } from "vite-plugin-create-production-server";
+import { createProductionServerPlugin } from "vite-create-production-server-plugin";
 
 export default defineConfig({
   plugins: [
