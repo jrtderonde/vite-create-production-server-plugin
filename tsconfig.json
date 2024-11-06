@@ -1,24 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2023"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "outDir": "dist",
-
-    /* Bundler mode */
-    "moduleResolution": "Bundler",
-    // "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "declaration": true,
-
-    /* Linting */
+    "target": "es2018",
+    "outDir": "./dist",
+    "module": "esnext",
+    "lib": ["esnext", "DOM"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-    // "noUncheckedSideEffectImports": true
-  },
-  "include": ["src/**/*"]
+    "strictNullChecks": true,
+    "resolveJsonModule": true
+  }
 }

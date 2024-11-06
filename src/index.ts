@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 import { createServer } from "http";
 import serveStatic from "serve-static";
-import { PluginOption } from "vite";
+import { Plugin } from "vite";
 
 import { DEFAULT_OPTIONS } from "./config";
 import { CreateProductionServerOptions, ServeArgument } from "./types";
@@ -18,7 +18,7 @@ const getDefiniteOptions = (
 
 const cleanClientConsole = () => process.stdout.write("\x1Bc");
 
-const hasEnvironmentValue = (): boolean => {
+const hasArgument = (): boolean => {
   const standardArgument: ServeArgument = "--serve";
   const shortArgument: ServeArgument = "-s";
   const includesArgument =
@@ -34,14 +34,14 @@ const hasEnvironmentValue = (): boolean => {
 
 export function createProductionServerPlugin(
   options?: CreateProductionServerOptions
-): PluginOption {
+): Plugin {
   const { buildDirectory, entryPoint, port } = getDefiniteOptions(options);
 
   return {
     name: "vite-plugin-create-production-server",
     apply: "build" as const,
     closeBundle() {
-      if (!hasEnvironmentValue()) return;
+      if (!hasArgument()) return;
 
       const server = createServer((req, res) => {
         const serve = serveStatic(buildDirectory, {
@@ -70,3 +70,5 @@ export function createProductionServerPlugin(
     },
   };
 }
+
+export default createProductionServerPlugin;
